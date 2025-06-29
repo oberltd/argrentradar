@@ -83,7 +83,7 @@ async def start_scraping(
             
             return {
                 "message": "Scraping started for all websites",
-                "websites": ["zonaprop.com.ar", "argenprop.com"],
+                "websites": ["zonaprop.com.ar", "argenprop.com", "mercadolibre.com.ar", "remax.com.ar", "properati.com.ar", "inmuebles24.com", "navent.com"],
                 "filters": filters.dict(),
                 "max_pages": max_pages
             }
@@ -116,8 +116,9 @@ async def start_website_scraping(
 ):
     """Start scraping for a specific website."""
     try:
-        if website not in ['zonaprop.com.ar', 'argenprop.com']:
-            raise HTTPException(status_code=400, detail=f"Unsupported website: {website}")
+        supported_websites = ['zonaprop.com.ar', 'argenprop.com', 'mercadolibre.com.ar', 'remax.com.ar', 'properati.com.ar', 'inmuebles24.com', 'navent.com']
+        if website not in supported_websites:
+            raise HTTPException(status_code=400, detail=f"Unsupported website: {website}. Supported: {supported_websites}")
         
         # Create filters
         filters = PropertySearchFilters(
@@ -280,6 +281,31 @@ async def get_supported_websites():
                 "name": "ArgenProp",
                 "url": "argenprop.com",
                 "description": "Popular real estate search platform"
+            },
+            {
+                "name": "MercadoLibre",
+                "url": "mercadolibre.com.ar",
+                "description": "Argentina's largest e-commerce platform with real estate section"
+            },
+            {
+                "name": "RE/MAX",
+                "url": "remax.com.ar",
+                "description": "International real estate franchise with strong presence in Argentina"
+            },
+            {
+                "name": "Properati",
+                "url": "properati.com.ar",
+                "description": "Modern real estate platform with advanced search features"
+            },
+            {
+                "name": "Inmuebles24",
+                "url": "inmuebles24.com",
+                "description": "Popular real estate portal across Latin America"
+            },
+            {
+                "name": "Navent",
+                "url": "navent.com",
+                "description": "Technology platform powering multiple real estate portals"
             }
         ]
     }

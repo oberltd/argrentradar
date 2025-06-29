@@ -38,7 +38,7 @@ app.add_middleware(
 app.include_router(properties.router, prefix="/api/v1/properties", tags=["properties"])
 app.include_router(scraping.router, prefix="/api/v1/scraping", tags=["scraping"])
 app.include_router(statistics.router, prefix="/api/v1/statistics", tags=["statistics"])
-app.include_router(llm.router, prefix="/api/v1", tags=["llm"])
+app.include_router(llm.router, prefix="/api/v1/llm", tags=["llm"])
 
 # Setup templates
 templates_dir = os.path.join(os.path.dirname(__file__), "templates")

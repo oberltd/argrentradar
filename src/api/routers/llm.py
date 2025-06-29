@@ -8,7 +8,7 @@ from ...services.property_service import PropertyService
 from ...llm import DeepSeekClient, PropertyAnalyzer, TextEnhancer
 from ...utils import app_logger, settings
 
-router = APIRouter(prefix="/llm", tags=["LLM"])
+router = APIRouter(tags=["LLM"])
 
 
 class AnalyzePropertyRequest(BaseModel):
