@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argentina Real Estate Parser - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card h3 {
+            color: #667eea;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .property-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .property-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .property-item:hover {
+            border-color: #667eea;
+        }
+        
+        .property-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .property-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .property-price {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .property-location {
+            color: #666;
+        }
+        
+        .property-source {
+            background: #f0f0f0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .api-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .api-link {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        
+        .api-link:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .property-details {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏠 Argentina Real Estate Parser</h1>
+        <p>Comprehensive real estate data from Argentina's top property websites</p>
+    </div>
+    
+    <div class="container">
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Properties</h3>
+                <div class="value">{{ property_stats.total_properties or 0 }}</div>
+                <div class="description">Properties in database</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>New Today</h3>
+                <div class="value">{{ property_stats.activity.new_last_24h or 0 }}</div>
+                <div class="description">Added in last 24 hours</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Updated Today</h3>
+                <div class="value">{{ property_stats.activity.updated_last_24h or 0 }}</div>
+                <div class="description">Updated in last 24 hours</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Scraping Sessions</h3>
+                <div class="value">{{ scraping_stats.total_sessions or 0 }}</div>
+                <div class="description">Total scraping runs</div>
+            </div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="actions">
+            <a href="/api/v1/scraping/start" class="btn" onclick="startScraping()">🚀 Start Scraping</a>
+            <a href="/docs" class="btn btn-secondary">📚 API Documentation</a>
+            <a href="/api/v1/properties" class="btn btn-secondary">🔍 Browse Properties</a>
+        </div>
+        
+        <!-- Recent Properties -->
+        <div class="section">
+            <h2>📈 Recent Properties</h2>
+            {% if recent_properties %}
+                <div class="property-list">
+                    {% for property in recent_properties %}
+                    <div class="property-item">
+                        <div class="property-title">{{ property.title }}</div>
+                        <div class="property-details">
+                            <span class="property-price">
+                                {% if property.price_amount %}
+                                    {{ property.price_currency }} {{ "{:,.0f}".format(property.price_amount) }}
+                                {% else %}
+                                    Price not available
+                                {% endif %}
+                            </span>
+                            <span class="property-location">
+                                {% if property.city %}{{ property.city }}{% endif %}
+                                {% if property.neighborhood %}, {{ property.neighborhood }}{% endif %}
+                            </span>
+                            <span class="property-source">{{ property.source_website }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No recent properties found. Start scraping to see data here!</p>
+            {% endif %}
+        </div>
+        
+        <!-- Property Statistics -->
+        <div class="section">
+            <h2>📊 Property Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>By Type</h3>
+                    {% for type, count in property_stats.by_type.items() %}
+                        <div>{{ type.title() }}: {{ count }}</div>
+                    {% endfor %}
+                </div>
+                
+                <div class="stat-card">
+                    <h3>By Operation</h3>
+                    {% for operation, count in property_stats.by_operation.items() %}
+                        <div>{{ operation.title() }}: {{ count }}</div>
+                    {% endfor %}
+                </div>
+                
+                <div class="stat-card">
+                    <h3>By Source</h3>
+                    {% for source, count in property_stats.by_source.items() %}
+                        <div>{{ source }}: {{ count }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- API Links -->
+        <div class="section">
+            <h2>🔗 API Endpoints</h2>
+            <div class="api-links">
+                <a href="/api/v1/properties" class="api-link">
+                    <strong>Properties</strong><br>
+                    Search and browse properties
+                </a>
+                <a href="/api/v1/scraping/status" class="api-link">
+                    <strong>Scraping Status</strong><br>
+                    Check scraping progress
+                </a>
+                <a href="/api/v1/statistics/overview" class="api-link">
+                    <strong>Statistics</strong><br>
+                    View detailed statistics
+                </a>
+                <a href="/docs" class="api-link">
+                    <strong>Documentation</strong><br>
+                    Full API documentation
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function startScraping() {
+            if (confirm('Start scraping all websites? This may take several minutes.')) {
+                fetch('/api/v1/scraping/start', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Scraping started! Check the scraping status for progress.');
+                })
+                .catch(error => {
+                    alert('Error starting scraping: ' + error);
+                });
+            }
+            return false;
+        }
+        
+        // Auto-refresh every 30 seconds
+        setTimeout(() => {
+            location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>
