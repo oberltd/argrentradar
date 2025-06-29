@@ -3,23 +3,26 @@
 ## Шаг 1: Создание репозитория на GitHub
 
 1. Перейдите на [GitHub.com](https://github.com)
-2. Нажмите кнопку **"New repository"** (зеленая кнопка)
+2. Нажмите кнопку **"New repository"** (зеленая кнопка) или перейдите на https://github.com/new
 3. Заполните форму:
    - **Repository name**: `argentina-real-estate-parser`
-   - **Description**: `Comprehensive real estate data parser for Argentine property websites (ZonaProp, ArgenProp) with REST API and web dashboard`
-   - **Visibility**: Public (или Private по желанию)
+   - **Description**: `🏠 Comprehensive real estate data parser for Argentine property websites (ZonaProp, ArgenProp) with REST API and web dashboard`
+   - **Visibility**: Public (рекомендуется для демонстрации)
    - **НЕ** ставьте галочки на "Add a README file", "Add .gitignore", "Choose a license"
 4. Нажмите **"Create repository"**
 
 ## Шаг 2: Загрузка кода
 
-После создания репозитория GitHub покажет инструкции. Выполните следующие команды в терминале:
+Ваш проект уже готов к загрузке! Выполните следующие команды:
 
 ```bash
 # Перейдите в папку проекта
 cd /workspace/argentina_real_estate_parser
 
-# Добавьте удаленный репозиторий (замените YOUR_USERNAME на ваш GitHub username)
+# Удалите старый remote (если есть)
+git remote remove origin
+
+# Добавьте новый удаленный репозиторий (замените YOUR_USERNAME на ваш GitHub username)
 git remote add origin https://github.com/YOUR_USERNAME/argentina-real-estate-parser.git
 
 # Загрузите код на GitHub
