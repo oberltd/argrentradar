@@ -32,6 +32,13 @@ class Settings(BaseSettings):
     celery_broker_url: str = Field(default="redis://localhost:6379/0", env="CELERY_BROKER_URL")
     celery_result_backend: str = Field(default="redis://localhost:6379/0", env="CELERY_RESULT_BACKEND")
     
+    # LLM Configuration
+    deepseek_base_url: str = Field(default="http://localhost:11434", env="DEEPSEEK_BASE_URL")
+    deepseek_api_key: Optional[str] = Field(default=None, env="DEEPSEEK_API_KEY")
+    deepseek_model: str = Field(default="deepseek-r1:latest", env="DEEPSEEK_MODEL")
+    deepseek_timeout: int = Field(default=30, env="DEEPSEEK_TIMEOUT")
+    llm_enabled: bool = Field(default=True, env="LLM_ENABLED")
+    
     # Notification Configuration
     telegram_bot_token: Optional[str] = Field(default=None, env="TELEGRAM_BOT_TOKEN")
     telegram_chat_id: Optional[str] = Field(default=None, env="TELEGRAM_CHAT_ID")
@@ -45,7 +52,10 @@ class Settings(BaseSettings):
         "zonaprop.com.ar",
         "argenprop.com",
         "remax.com.ar",
-        "mercadolibre.com.ar"
+        "mercadolibre.com.ar",
+        "properati.com.ar",
+        "inmuebles24.com",
+        "navent.com"
     ]
     
     class Config:

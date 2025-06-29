@@ -4,7 +4,10 @@ from datetime import datetime, timedelta
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
-from ..parsers import ZonaPropParser, ArgenPropParser
+from ..parsers import (
+    ZonaPropParser, ArgenPropParser, MercadoLibreParser, 
+    RemaxParser, ProperatiParser, Inmuebles24Parser, NaventParser
+)
 from ..database.models import ScrapingSession
 from ..models import PropertySearchFilters
 from .property_service import PropertyService
@@ -20,6 +23,11 @@ class ScrapingService:
         self.parsers = {
             'zonaprop.com.ar': ZonaPropParser(),
             'argenprop.com': ArgenPropParser(),
+            'mercadolibre.com.ar': MercadoLibreParser(),
+            'remax.com.ar': RemaxParser(),
+            'properati.com.ar': ProperatiParser(),
+            'inmuebles24.com': Inmuebles24Parser(),
+            'navent.com': NaventParser(),
         }
         
     def start_scraping_session(self, website: str, filters: PropertySearchFilters) -> ScrapingSession:

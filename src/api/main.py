@@ -11,7 +11,7 @@ from ..database import get_db, init_database
 from ..models import PropertySearchFilters
 from ..services import PropertyService, ScrapingService
 from ..utils import app_logger, settings
-from .routers import properties, scraping, statistics
+from .routers import properties, scraping, statistics, llm
 
 # Initialize database
 init_database()
@@ -38,6 +38,7 @@ app.add_middleware(
 app.include_router(properties.router, prefix="/api/v1/properties", tags=["properties"])
 app.include_router(scraping.router, prefix="/api/v1/scraping", tags=["scraping"])
 app.include_router(statistics.router, prefix="/api/v1/statistics", tags=["statistics"])
+app.include_router(llm.router, prefix="/api/v1", tags=["llm"])
 
 # Setup templates
 templates_dir = os.path.join(os.path.dirname(__file__), "templates")
