@@ -1,6 +1,11 @@
-# Argentina Real Estate Parser
+# 🏠 ArgRentRadar - Argentina Real Estate Parser
 
-Сервис для парсинга данных сайтов объявлений по аренде и продаже недвижимости в Аргентине.
+**ArgRentRadar** - это комплексное решение для автоматического сбора, обработки и предоставления данных о недвижимости из популярных аргентинских сайтов объявлений.
+
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub](https://img.shields.io/badge/GitHub-argrentradar-black.svg)](https://github.com/oberltd/argrentradar)
 
 ## 🏠 Описание
 
@@ -240,11 +245,21 @@ src/
 ## 📞 Поддержка
 
 Если у вас есть вопросы или проблемы:
-- Создайте Issue в GitHub
-- Напишите на email: support@example.com
+- Создайте Issue в GitHub: https://github.com/oberltd/argrentradar/issues
+- Проверьте документацию в репозитории
+
+## 🔗 Ссылки
+
+- **GitHub Repository**: https://github.com/oberltd/argrentradar
+- **API Documentation**: http://localhost:12000/docs (после запуска)
+- **Web Dashboard**: http://localhost:12000/ (после запуска)
 
 ## 🙏 Благодарности
 
 - Команде FastAPI за отличный фреймворк
 - Разработчикам BeautifulSoup и Scrapy
 - Сообществу Python за инструменты и библиотеки
+
+---
+
+**ArgRentRadar** - Ваш радар аргентинской недвижимости! 🏠🇦🇷
